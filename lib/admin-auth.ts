@@ -1,6 +1,4 @@
-
 import { LoginRequest } from "./type/login";
-
 export async function loginAdmin(loginData: LoginRequest) {
     const res = await fetch("/api/login", {
         method: "POST",

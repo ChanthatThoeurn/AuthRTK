@@ -23,15 +23,11 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 
-import { redirect } from "next/navigation"
-import { loginAdmin } from "../lib/admin-auth"
-
 const formSchema = z.object({
   email: z
-    .email(),
-  password: z
-    .string()
-    .min(4, "Password must be at least 4 characters.")
+    .email({ message: "Please enter a valid email address." }),
+  password: z 
+    .min(4, "Password must be at least 4 characters."),
 })
 
 export function LoginForm() {
@@ -43,20 +39,7 @@ export function LoginForm() {
     },
   })
 
-  async function onSubmit(data: z.infer<typeof formSchema>) {
-    let isSuccess = false;
-    try{
-        const res = await loginAdmin(data)
-        isSuccess = true;
-        console.log("res after login", res)
-    }catch(error){
-        console.log("login form", error)
-    }
-
-    if(isSuccess){
-        redirect("/dashboard")
-    }
-
+  function onSubmit(data: z.infer<typeof formSchema>) {
   }
 
   return (
@@ -64,7 +47,7 @@ export function LoginForm() {
       <CardHeader>
         <CardTitle>Login Form</CardTitle>
         <CardDescription>
-          Sign In to Dashboard
+         Signin to dachboard
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -112,12 +95,14 @@ export function LoginForm() {
                 </Field>
               )}
             />
-           
           </FieldGroup>
         </form>
       </CardContent>
       <CardFooter>
         <Field orientation="horizontal">
+          <Button type="button" variant="outline" onClick={() => form.reset()}>
+            Reset
+          </Button>
           <Button type="submit" form="form-rhf-demo">
             Sign In
           </Button>
