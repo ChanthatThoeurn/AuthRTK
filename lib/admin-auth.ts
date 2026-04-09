@@ -24,3 +24,4 @@ export async function getAdminData(token: string){
     const data = await res.json()
     return data;
 }
+ 
